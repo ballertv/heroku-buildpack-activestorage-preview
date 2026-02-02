@@ -26,6 +26,7 @@ echo "-----> Building ${dep_package}..."
 needed=(
 	gir1.2-harfbuzz-0.0 \
 	libass9 \
+	libfontconfig1 \
 	libfreetype6 \
 	libfribidi0 \
 	libgraphite2-3 \
@@ -103,8 +104,10 @@ needed=(
   git-core \
   libaom-dev \
   libass-dev \
+  libfontconfig1-dev \
   libfreetype6-dev \
   libgnutls28-dev \
+  libharfbuzz-dev \
   libmp3lame-dev \
   libtool \
   libunistring-dev \
@@ -173,7 +176,9 @@ configureopts=(
 	--enable-gnutls \
 	--enable-libass \
 	# --enable-libfdk-aac \ # not for now, as it's multiverse, and requires --enable-nonfree
+	--enable-libfontconfig \
 	--enable-libfreetype \
+	--enable-libharfbuzz \
 	--enable-libmp3lame \
 	--enable-libopus \
 	--enable-libvorbis \

@@ -9,11 +9,13 @@ else
 	FFMPEG_VERSION="7.1.2"
 fi
 # Allow custom FFMPEG_INSTALL_URL to override the default S3 location
-if [[ -n "${FFMPEG_INSTALL_URL:-}" ]]; then
-	INSTALL_URL="$FFMPEG_INSTALL_URL"
-else
-	INSTALL_URL="https://heroku-activestorage-default.s3.amazonaws.com/dist_${STACK}_$(dpkg --print-architecture)/ffmpeg-${FFMPEG_VERSION}.tar.gz"
-fi
+# if [[ -n "${FFMPEG_INSTALL_URL:-}" ]]; then
+# 	INSTALL_URL="$FFMPEG_INSTALL_URL"
+# else
+# 	INSTALL_URL="https://heroku-activestorage-default.s3.amazonaws.com/dist_${STACK}_$(dpkg --print-architecture)/ffmpeg-${FFMPEG_VERSION}.tar.gz"
+# fi
+
+INSTALL_URL="https://baller-assets.s3.us-east-1.amazonaws.com/ffmpeg-7.1.2.tar.gz"
 
 BUILDPACK_DIR="$(dirname "$(dirname "$0")")"
 BUILD_DIR="$1"
@@ -47,7 +49,7 @@ echo '-----> Installing binary dependencies for ActiveStorage Preview'
 INSTALL_DIR="$BUILD_DIR/.heroku/activestorage-preview"
 mkdir -p "$INSTALL_DIR"
 
-echo "Downloading FFmpeg version $FFMPEG_VERSION" | indent
+echo "Downloading FFmpeg version $FFMPEG_VERSION from $INSTALL_URL" | indent
 curl_retry_on_18 -s --fail --retry 3 --retry-connrefused --connect-timeout "${CURL_CONNECT_TIMEOUT:-3}" "$INSTALL_URL" | tar xvz -C "$INSTALL_DIR" >/dev/null 2>&1
 echo 'Installing FFmpeg' | indent
 echo 'Done' | indent
